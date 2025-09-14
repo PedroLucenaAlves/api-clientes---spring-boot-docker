@@ -1,33 +1,29 @@
 package br.com.cliente.service;
 
+import br.com.cliente.controller.dto.filtro.ClienteFiltro;
 import br.com.cliente.entity.Cliente;
-import br.com.cliente.repository.ClienteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class ClienteService {
+public interface ClienteService {
 
-    @Autowired
-    ClienteRepository clienteRepository;
+    Cliente salvar(Cliente cliente);
 
-    public Cliente salvar(Cliente cliente){
-        return clienteRepository.save(cliente);
-    }
+    Page<Cliente> listaCliente(ClienteFiltro clienteFiltro, Pageable pageable); //contrato (interface nao tem implementacao, ou seja, o trecho que fica entre os { ... }
+    //A paginacao e um tipo de filtragem que nos possibilita em massas muito grandes, passar apenas a quantidade que desejamos
+    //exp: se eu filtrar pelo nome Silva em uma base de dados, provavelmente mais de 20 usuarios salvos apareceram. Para evitar que seja exibido todos de uma vez, usamos o pageable
+    //Para usarmos a filtragem, setamos nos parametros do Postman (ou ferramenta de requisicao), os campos size (tanto de dados que serao exibidos em uma unica pagina)
+    //e o page (começando pelo indice 0 que representa a primeira pagina)
 
-    public List<Cliente> listaCliente(){
-        return clienteRepository.findAll();
-    }
+    Optional<Cliente> buscarPorId(Long id);
 
-    public Optional<Cliente> buscarPorId(Long id){
-        return clienteRepository.findById(id);
-    }
+    void removerPorId(Long id);
 
-    public void removerPorId(Long id){
-        clienteRepository.deleteById(id);
-    }
+    //    public Optional<Cliente> buscarPorId(Long id){ <--contrato
+//        return clienteRepository.findById(id);  <--- implementacao
+//    }
 
 }

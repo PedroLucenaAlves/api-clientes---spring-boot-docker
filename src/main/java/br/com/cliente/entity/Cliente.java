@@ -1,19 +1,15 @@
 package br.com.cliente.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.io.Serializable;
-
-@Data //get set e toString
+@Getter
+@Setter
 @AllArgsConstructor //construtor com as propriedades
 @NoArgsConstructor //construtor vazio
 @Builder //cria objeto clientes
 @Entity
-public class Cliente implements Serializable {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
