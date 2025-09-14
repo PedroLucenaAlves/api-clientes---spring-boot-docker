@@ -1,10 +1,12 @@
 package br.com.cliente.controller;
 
+import br.com.cliente.controller.dto.filtro.ClienteFiltro;
 import br.com.cliente.entity.Cliente;
-import br.com.cliente.service.ClienteService;
-import ch.qos.logback.core.net.server.Client;
+import br.com.cliente.service.impl.ClienteServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,7 +18,7 @@ import java.util.List;
 public class ClienteController {
 
     @Autowired
-    ClienteService clienteService;
+    ClienteServiceImpl clienteService;
 
     @Autowired
     ModelMapper modelMapper;
@@ -29,8 +31,9 @@ public class ClienteController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Cliente> listarCliente(){
-        return clienteService.listaCliente();
+    public Page<Cliente> listarCliente(ClienteFiltro clienteFiltro, Pageable pageable){
+        return clienteService.listaCliente(clienteFiltro, pageable); //A paginacao e um tipo de filtragem que nos possibilita em massas muito grandes, passar apenas a quantidade que desejamos
+        //exp: se eu filtrar pelo nome Silva em uma base de dados, provavelmente mais de 20 usuarios salvos apareceram. Para evitar que seja exibido todos de uma vez, usamos o pageable
     }
 
     @GetMapping("/{id}")             //passando o nome do path
