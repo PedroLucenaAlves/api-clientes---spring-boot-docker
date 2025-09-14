@@ -15,7 +15,7 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nome", nullable = false) // nullable = obriga enviar um campo nome
+    @Column(name = "nome", nullable = false)
     private String nome;
 
     @Column(name = "email")

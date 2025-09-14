@@ -24,7 +24,7 @@ public class ClienteController {
     ModelMapper modelMapper;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED) //201
+    @ResponseStatus(HttpStatus.CREATED)
     public Cliente salvar(@RequestBody Cliente cliente){
         return clienteService.salvar(cliente);
     }
@@ -32,11 +32,10 @@ public class ClienteController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<Cliente> listarCliente(ClienteFiltro clienteFiltro, Pageable pageable){
-        return clienteService.listaCliente(clienteFiltro, pageable); //A paginacao e um tipo de filtragem que nos possibilita em massas muito grandes, passar apenas a quantidade que desejamos
-        //exp: se eu filtrar pelo nome Silva em uma base de dados, provavelmente mais de 20 usuarios salvos apareceram. Para evitar que seja exibido todos de uma vez, usamos o pageable
+        return clienteService.listaCliente(clienteFiltro, pageable);
     }
 
-    @GetMapping("/{id}")             //passando o nome do path
+    @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Cliente buscarClientePorId(@PathVariable("id") Long id){
         return clienteService.buscarPorId(id)
@@ -55,7 +54,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT) //sem conteudo 204
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizarCliente(@PathVariable("id") Long id, @RequestBody Cliente cliente){
         clienteService.buscarPorId(id)
                 .map(clienteBase -> {
